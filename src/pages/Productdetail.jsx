@@ -19,7 +19,7 @@ const Productdetail = () => {
         return;
     }
 
-    const handleAddtoCard = (product) => {
+    const handleAddtoCard = async (product) => {
         let cartItem = {
             productId: product.id,
             title: product.title,
@@ -29,7 +29,7 @@ const Productdetail = () => {
             quantity: 1,
         };
 
-        let prdAdded = dispatch(asyncAddProduct(cartItem));
+        let prdAdded = await dispatch(asyncAddProduct(cartItem));
         if (prdAdded) navigate("/cart");
     };
 

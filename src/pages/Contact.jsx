@@ -32,7 +32,11 @@ const ContactPage = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-
+        const user = localStorage.getItem("user");
+        if (!user) {
+            toast.warning("Login to access the resource");
+            return;
+        }
         if (!validate()) return;
 
         toast.success("Message Sent ✅");

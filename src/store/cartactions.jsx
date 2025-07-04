@@ -6,8 +6,8 @@ export const asyncAddProduct = (cartItem) => async (dispatch, getState) => {
     let userData = JSON.parse(localStorage.getItem("user") || "[]");
     let userId = userData[0]?.id;
     if (!userId) {
-        toast.warning("Login to access the resorce");
-        return;
+        toast.warning("Login to access the resource");
+        return false;
     }
     try {
         let res = await axios.get(`/cart?userId=${userId}`);

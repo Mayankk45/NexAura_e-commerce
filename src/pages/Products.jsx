@@ -1,8 +1,11 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { asyncAddProduct } from "../store/cartactions";
 
 const Products = () => {
+    const dispatch = useDispatch();
+
     const [headPhones, setHeadPhones] = useState([]);
     const [earbuds, setEarbuds] = useState([]);
     const [smartwatch, setSmartwatch] = useState([]);
@@ -25,6 +28,23 @@ const Products = () => {
         navigate(`/product_details/${id}`);
     };
 
+    const handleAddtoCard = async (product) => {
+        let cartItem = {
+            productId: product.id,
+            title: product.title,
+            image: product.image,
+            model: product.model,
+            color: product.color,
+            quantity: 1,
+        };
+
+        let prdAdded = await dispatch(asyncAddProduct(cartItem));
+        if (prdAdded) navigate("/cart");
+        else {
+            toast.warning("Login to access the resource");
+        }
+    };
+
     let renderHeadphones = headPhones.map((item, idx) => (
         <div className="card" key={idx}>
             <div className="card_img">
@@ -42,7 +62,9 @@ const Products = () => {
                 {item.price}
             </p>
             <div className="card_bottom">
-                <button>add to cart</button>
+                <button onClick={() => handleAddtoCard(item)}>
+                    add to cart
+                </button>
                 <button onClick={() => productClick(item.id)}>
                     view details
                 </button>
@@ -67,7 +89,9 @@ const Products = () => {
                 {item.price}
             </p>
             <div className="card_bottom">
-                <button>add to cart</button>
+                <button onClick={() => handleAddtoCard(item)}>
+                    add to cart
+                </button>
                 <button onClick={() => productClick(item.id)}>
                     view details
                 </button>
@@ -92,7 +116,9 @@ const Products = () => {
                 {item.price}
             </p>
             <div className="card_bottom">
-                <button>add to cart</button>
+                <button onClick={() => handleAddtoCard(item)}>
+                    add to cart
+                </button>
                 <button onClick={() => productClick(item.id)}>
                     view details
                 </button>
@@ -118,7 +144,9 @@ const Products = () => {
             </p>
 
             <div className="card_bottom">
-                <button>add to cart</button>
+                <button onClick={() => handleAddtoCard(item)}>
+                    add to cart
+                </button>
                 <button onClick={() => productClick(item.id)}>
                     view details
                 </button>

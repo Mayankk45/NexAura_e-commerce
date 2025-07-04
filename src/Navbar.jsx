@@ -1,9 +1,10 @@
 import { NavLink, useNavigate } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncLogoutUser } from "./store/useractions";
 import { toast } from "react-toastify";
 import { FaShoppingCart } from "react-icons/fa";
+import { loaduser } from "./store/userslice";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -16,6 +17,12 @@ const Navbar = () => {
     const handleLoginClick = () => {
         setShowDropdown(!showDropdown);
     };
+
+    useEffect(() => {
+        let user = localStorage.getItem("user") || "";
+        if (user) dispatch(loaduser(user));
+        else dispatch(loaduser(null));
+    }, []);
 
     const handleOptionClick = (type) => {
         setShowDropdown(false);
@@ -46,6 +53,9 @@ const Navbar = () => {
                     </li>
                     <li>
                         <NavLink to="/about">About</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/product_explore">Products</NavLink>
                     </li>
                     <li>
                         <NavLink to="/service">Services</NavLink>

@@ -11,6 +11,7 @@ import Createproduct from "./pages/admin/Createproduct";
 import Products from "./pages/Products";
 import Productdetail from "./pages/Productdetail";
 import Cart from "./pages/Cart";
+import Authwrapper from "./pages/Authwrapper";
 
 const Mainroutes = () => {
     return (
@@ -30,8 +31,14 @@ const Mainroutes = () => {
 
             <Route path="/product_explore" element={<Products />} />
             <Route path="/product_details/:id" element={<Productdetail />} />
-
-            <Route path="/cart" element={<Cart />} />
+            <Route
+                path="/cart"
+                element={
+                    <Authwrapper>
+                        <Cart />
+                    </Authwrapper>
+                }
+            />
 
             <Route path="*" element={<Pagenotfound />} />
         </Routes>
