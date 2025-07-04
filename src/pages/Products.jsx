@@ -75,6 +75,31 @@ const Products = () => {
         </div>
     ));
 
+    let renderSmartwatch = smartwatch.map((item, idx) => (
+        <div className="card" key={idx}>
+            <div className="card_img">
+                <img src={item.image} alt={item.title} />
+            </div>
+
+            <p className="title">{item.title}</p>
+            <div className="details">
+                <p>{item.brand}</p>
+                <p>{item.model}</p>
+                <p>{item.color}</p>
+            </div>
+            <p className="price">
+                <span>₹ </span>
+                {item.price}
+            </p>
+            <div className="card_bottom">
+                <button>add to cart</button>
+                <button onClick={() => productClick(item.id)}>
+                    view details
+                </button>
+            </div>
+        </div>
+    ));
+
     let renderSpeaker = speakers.map((item, idx) => (
         <div className="card" key={idx}>
             <div className="card_img">
@@ -92,27 +117,6 @@ const Products = () => {
                 {item.price}
             </p>
 
-            <button>add to cart</button>
-            <button onClick={() => productClick(item.id)}>view details</button>
-        </div>
-    ));
-
-    let renderSmartwatch = smartwatch.map((item, idx) => (
-        <div className="card" key={idx}>
-            <div className="card_img">
-                <img src={item.image} alt={item.title} />
-            </div>
-
-            <p className="title">{item.title}</p>
-            <div className="details">
-                <p>{item.brand}</p>
-                <p>{item.model}</p>
-                <p>{item.color}</p>
-            </div>
-            <p className="price">
-                <span>₹ </span>
-                {item.price}
-            </p>
             <div className="card_bottom">
                 <button>add to cart</button>
                 <button onClick={() => productClick(item.id)}>

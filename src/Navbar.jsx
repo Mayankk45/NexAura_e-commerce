@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncLogoutUser } from "./store/useractions";
 import { toast } from "react-toastify";
+import { FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -26,8 +27,13 @@ const Navbar = () => {
     };
 
     const handleLogoutClick = () => {
+        navigate("/");
         dispatch(asyncLogoutUser());
-        toast.success("Logout Successfully 😒");
+        toast.success("Logout Successfully");
+    };
+
+    const handleCartClick = () => {
+        navigate("/cart");
     };
 
     return (
@@ -49,7 +55,7 @@ const Navbar = () => {
                     </li>
                     {currentUser?.isAdmin && (
                         <li>
-                            <NavLink to="/admin/create-ptoduct">
+                            <NavLink to="/admin/create-product/''">
                                 Create-Product
                             </NavLink>
                         </li>
@@ -78,9 +84,16 @@ const Navbar = () => {
                     )}
                 </div>
             ) : (
-                <div className="navbar_logout" onClick={handleLogoutClick}>
-                    Logout
-                </div>
+                <>
+                    <FaShoppingCart
+                        onClick={handleCartClick}
+                        className="cartIcon"
+                        size={24}
+                    />
+                    <div className="navbar_logout" onClick={handleLogoutClick}>
+                        Logout
+                    </div>
+                </>
             )}
         </nav>
     );

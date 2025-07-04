@@ -4,14 +4,16 @@ import Navbar from "./Navbar";
 import { ToastContainer } from "react-toastify";
 import { asyncGetProduct } from "./store/productactions";
 import { useDispatch, useSelector } from "react-redux";
+import { asyncGetCart } from "./store/cartactions";
 
 const App = () => {
     let dispatch = useDispatch();
-    let prd = useSelector((state) => state.productReducer.product);
-    console.log(prd);
+
     useEffect(() => {
         dispatch(asyncGetProduct());
+        dispatch(asyncGetCart());
     }, []);
+
     return (
         <div>
             <Navbar />

@@ -15,8 +15,8 @@ const Userlogin = () => {
 
     const onSubmit = async (data) => {
         data.isAdmin = false;
-        let loginSucced = await dispatch(asyncLoginUser(data));
-        if (loginSucced) navigate("/");
+        let loginSucceed = await dispatch(asyncLoginUser(data));
+        if (loginSucceed) navigate("/");
     };
 
     return (

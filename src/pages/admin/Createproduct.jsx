@@ -1,21 +1,56 @@
 import { nanoid } from "@reduxjs/toolkit";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { asyncCreateProduct } from "./../../store/productactions";
-import productSlice from "./../../store/productslice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    asyncCreateProduct,
+    asyncUpdateProduct,
+} from "./../../store/productactions";
+import { useNavigate, useParams } from "react-router";
+import { toast } from "react-toastify";
 
 const Createproduct = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { id } = useParams();
+
+    const allProduct = useSelector((state) => state.productReducer.product);
+    const prdToUpdate = allProduct.find((prd) => prd.id === id);
 
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            id: prdToUpdate?.id || "",
+            title: prdToUpdate?.title || "",
+            image: prdToUpdate?.image || "",
+            price: prdToUpdate?.price || "",
+            description: prdToUpdate?.description || "",
+            brand: prdToUpdate?.brand || "",
+            model: prdToUpdate?.model || "",
+            color: prdToUpdate?.color || "",
+            category: prdToUpdate?.category || "",
+        },
+    });
 
     const onSubmit = (productData) => {
-        productData.id = nanoid();
-        dispatch(asyncCreateProduct(productData));
+        if (!id) {
+            // handle create product
+            productData.id = nanoid();
+            let productCreated = dispatch(asyncCreateProduct(productData));
+            if (productCreated) {
+                navigate("/product_explore");
+                toast.success("product created");
+            } else {
+                toast.error("unable to create product");
+            }
+        } else {
+            // handle update product
+            dispatch(asyncUpdateProduct(productData));
+            navigate(`/product_details/${productData.id}`);
+            toast.success("product updated");
+        }
     };
 
     return (
@@ -107,7 +142,12 @@ const Createproduct = () => {
                 {errors.category && (
                     <p className="error">{errors.category.message}</p>
                 )}
-                <button type="submit">Submit Product</button>
+
+                {!id ? (
+                    <button type="submit">Submit Product</button>
+                ) : (
+                    <button type="submit">Update Product</button>
+                )}
             </form>
         </div>
     );

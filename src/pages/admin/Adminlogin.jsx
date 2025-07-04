@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { asyncLoginUser } from "../../store/useractions";
+import { toast } from "react-toastify";
 
 const Adminlogin = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const {
@@ -10,9 +14,9 @@ const Adminlogin = () => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
-        console.log("Login Data:", data);
-        // You can trigger your login API here
+    const onSubmit = async (data) => {
+        const loginSucceed = await dispatch(asyncLoginUser(data, true));
+        if (loginSucceed) navigate("/");
     };
 
     return (
@@ -21,12 +25,14 @@ const Adminlogin = () => {
                 <h2>Admin Login</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <input
-                        {...register("name", { required: "Please enter name" })}
-                        type="text"
-                        placeholder="Enter name"
+                        {...register("email", {
+                            required: "Please enter email",
+                        })}
+                        type="email"
+                        placeholder="Enter email"
                     />
-                    {errors.name && (
-                        <p className="error">{errors.name.message}</p>
+                    {errors.email && (
+                        <p className="error">{errors.email.message}</p>
                     )}
 
                     <input

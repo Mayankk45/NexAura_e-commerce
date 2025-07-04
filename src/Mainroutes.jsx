@@ -10,6 +10,7 @@ import Adminlogin from "./pages/admin/Adminlogin";
 import Createproduct from "./pages/admin/Createproduct";
 import Products from "./pages/Products";
 import Productdetail from "./pages/Productdetail";
+import Cart from "./pages/Cart";
 
 const Mainroutes = () => {
     return (
@@ -22,10 +23,15 @@ const Mainroutes = () => {
             <Route path="/user-signup" element={<Usersignup />} />
 
             <Route path="/admin-login" element={<Adminlogin />} />
-            <Route path="/admin/create-ptoduct" element={<Createproduct />} />
+            <Route
+                path="/admin/create-product/:id"
+                element={<Createproduct />}
+            />
 
             <Route path="/product_explore" element={<Products />} />
             <Route path="/product_details/:id" element={<Productdetail />} />
+
+            <Route path="/cart" element={<Cart />} />
 
             <Route path="*" element={<Pagenotfound />} />
         </Routes>

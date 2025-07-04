@@ -15,19 +15,22 @@ export const asyncRegisterUser = (user) => async (dispatch, getState) => {
     }
 };
 
-export const asyncLoginUser = (user) => async (dispatch, getState) => {
+export const asyncLoginUser = (user, isAdmin) => async (dispatch, getState) => {
     try {
         let res = await axios.get(
             `users?email=${user.email}&password=${user.password}`
         );
         let loginUser = res.data;
         if (loginUser.length > 0) {
-            toast.success("Login Successfully 😀");
+            if (isAdmin) toast.success("Admin Login Successfully");
+            else toast.success("Login Successfully");
             localStorage.setItem("user", JSON.stringify(loginUser));
             dispatch(loaduser(loginUser));
             return true;
         } else {
-            toast.error("user not found ☹️, please register");
+            if (isAdmin)
+                toast.error("unable to login, wrong email or password");
+            else toast.error("user not found, please register");
             return false;
         }
     } catch (error) {

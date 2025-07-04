@@ -1,10 +1,16 @@
-import { useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router";
+import { asyncDeleteProduct } from "../store/productactions";
+import { toast } from "react-toastify";
+import { asyncAddProduct } from "../store/cartactions";
 
 const Productdetail = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const { id } = useParams();
     const user = useSelector((state) => state.userReducer.user);
-    console.log(user);
+    const cart = useSelector((state) => state.cartReducer.cart);
 
     const products = useSelector((state) => state.productReducer.product);
     const product = products.find((product) => product.id === id);
@@ -12,6 +18,32 @@ const Productdetail = () => {
     if (!product) {
         return;
     }
+
+    const handleAddtoCard = (product) => {
+        let cartItem = {
+            productId: product.id,
+            title: product.title,
+            image: product.image,
+            model: product.model,
+            color: product.color,
+            quantity: 1,
+        };
+
+        let prdAdded = dispatch(asyncAddProduct(cartItem));
+        if (prdAdded) navigate("/cart");
+    };
+
+    const handleUpdateProduct = (id) => {
+        navigate(`/admin/create-product/${id}`);
+    };
+
+    const handleDeleteProduct = (id) => {
+        let deleted = dispatch(asyncDeleteProduct(id));
+        if (deleted) {
+            toast.success("product deleted");
+            navigate("/product_explore");
+        }
+    };
 
     return (
         <div className="product-detail">
@@ -33,15 +65,30 @@ const Productdetail = () => {
                         <p>
                             <strong>Color:</strong> {product.color}
                         </p>
+                        <p>
+                            <strong>Category:</strong> {product.category}
+                        </p>
                         <p className="price">₹{product.price}</p>
                         <div className="productdetails_buttons">
-                            <button>Add to Cart</button>
+                            <button onClick={() => handleAddtoCard(product)}>
+                                Add to Cart
+                            </button>
                             {user ? (
                                 <>
-                                    <button className="update_product">
+                                    <button
+                                        onClick={() =>
+                                            handleUpdateProduct(product.id)
+                                        }
+                                        className="update_product"
+                                    >
                                         Update Product
                                     </button>
-                                    <button className="delete_product">
+                                    <button
+                                        onClick={() =>
+                                            handleDeleteProduct(product.id)
+                                        }
+                                        className="delete_product"
+                                    >
                                         Delete Product
                                     </button>
                                 </>
