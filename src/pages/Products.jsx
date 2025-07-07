@@ -30,6 +30,7 @@ const Products = () => {
 
     const handleAddtoCard = async (product) => {
         let cartItem = {
+            price: product.price,
             productId: product.id,
             title: product.title,
             image: product.image,

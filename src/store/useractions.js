@@ -43,3 +43,8 @@ export const asyncLogoutUser = () => async (dispatch, getState) => {
     localStorage.removeItem("user");
     dispatch(loaduser(null));
 };
+
+export const asyncGetUser = () => async (dispatch, getState) => {
+    let user = JSON.parse(localStorage.getItem("user" || ""));
+    dispatch(loaduser(user));
+};

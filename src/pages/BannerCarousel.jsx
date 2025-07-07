@@ -5,6 +5,8 @@ const bannerImages = [
     "/assets/slide_earbuds.webp",
     "/assets/slide_headphone.webp",
     "/assets/slide_discount.jpg",
+    "/assets/slide_watch1.webp",
+    "/assets/slide_watch2.jpg",
 ];
 
 const BannerCarousel = () => {

@@ -147,7 +147,7 @@ const Home = () => {
             <footer className="site-footer">
                 <div className="footer-container">
                     <div className="footer-column brand">
-                        <h2>SoundHub</h2>
+                        <h2>NexAura</h2>
                         <p>
                             Your one-stop shop for headphones, earbuds,
                             speakers, and smartwatches. Quality sound, fast

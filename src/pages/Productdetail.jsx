@@ -10,7 +10,6 @@ const Productdetail = () => {
 
     const { id } = useParams();
     const user = useSelector((state) => state.userReducer.user);
-    const cart = useSelector((state) => state.cartReducer.cart);
 
     const products = useSelector((state) => state.productReducer.product);
     const product = products.find((product) => product.id === id);
@@ -21,6 +20,7 @@ const Productdetail = () => {
 
     const handleAddtoCard = async (product) => {
         let cartItem = {
+            price: product.price,
             productId: product.id,
             title: product.title,
             image: product.image,
@@ -73,7 +73,7 @@ const Productdetail = () => {
                             <button onClick={() => handleAddtoCard(product)}>
                                 Add to Cart
                             </button>
-                            {user ? (
+                            {user.isAdmin === true ? (
                                 <>
                                     <button
                                         onClick={() =>

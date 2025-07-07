@@ -4,9 +4,10 @@ import { useNavigate } from "react-router";
 
 const Authwrapper = (props) => {
     const navigate = useNavigate();
-    const user = useSelector((state) => state.userReducer.user);
+    // const user = useSelector((state) => state.userReducer.user);
+    let user = JSON.parse(localStorage.getItem("user" || null));
     useEffect(() => {
-        if (!user) navigate("/user-login");
+        if (user == null) navigate("/user-login");
     }, []);
 
     return <>{user && props.children}</>;

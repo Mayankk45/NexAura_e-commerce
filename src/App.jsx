@@ -3,8 +3,9 @@ import Mainroutes from "./Mainroutes";
 import Navbar from "./Navbar";
 import { ToastContainer } from "react-toastify";
 import { asyncGetProduct } from "./store/productactions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { asyncGetCart } from "./store/cartactions";
+import { asyncGetUser } from "./store/useractions";
 
 const App = () => {
     let dispatch = useDispatch();
@@ -12,6 +13,7 @@ const App = () => {
     useEffect(() => {
         dispatch(asyncGetProduct());
         dispatch(asyncGetCart());
+        dispatch(asyncGetUser());
     }, []);
 
     return (

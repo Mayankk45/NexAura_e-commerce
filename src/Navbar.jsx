@@ -5,13 +5,13 @@ import { asyncLogoutUser } from "./store/useractions";
 import { toast } from "react-toastify";
 import { FaShoppingCart } from "react-icons/fa";
 import { loaduser } from "./store/userslice";
+import { asyncGetCart } from "./store/cartactions";
 
 const Navbar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const currentUser = useSelector((state) => state.userReducer.user);
-
     const [showDropdown, setShowDropdown] = useState(false);
 
     const handleLoginClick = () => {
@@ -40,13 +40,16 @@ const Navbar = () => {
     };
 
     const handleCartClick = () => {
+        dispatch(asyncGetCart());
         navigate("/cart");
     };
 
     return (
         <nav className="navbar">
             <div className="navbar__center">
-                <div className="navbar__logo">MySite</div>
+                <div className="navbar__logo">
+                    Nex<span>Aura</span>
+                </div>
                 <ul className="navbar__links">
                     <li>
                         <NavLink to="/">Home</NavLink>
@@ -71,6 +74,15 @@ const Navbar = () => {
                         </li>
                     )}
                 </ul>
+                <div className="welcome_banner">
+                    {currentUser ? (
+                        <h1>
+                            Welcome <span>{currentUser.name}</span>
+                        </h1>
+                    ) : (
+                        ""
+                    )}
+                </div>
             </div>
 
             {currentUser === null ? (

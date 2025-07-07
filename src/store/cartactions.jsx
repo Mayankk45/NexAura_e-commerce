@@ -58,12 +58,19 @@ export const asyncAddProduct = (cartItem) => async (dispatch, getState) => {
     }
 };
 
-export const asyncGetCart = (product) => async (dispatch, getState) => {
-    try {
-        let res = await axios.get("/cart");
-        dispatch(loadCart(res.data));
-    } catch (error) {
-        console.log("unable to add product", error);
+export const asyncGetCart = () => async (dispatch, getState) => {
+    let userData = JSON.parse(localStorage.getItem("user"));
+    let user = userData?.[0];
+    if (user && userData.length > -1) {
+        try {
+            let { data } = await axios.get("/cart");
+            let currUserCart = data.find((cart) => cart.userId == user.id);
+            dispatch(loadCart([currUserCart]));
+        } catch (error) {
+            console.log("unable to get product", error);
+        }
+    } else {
+        console.log("unable to get user, login first");
     }
 };
 
